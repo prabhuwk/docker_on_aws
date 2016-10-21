@@ -1,0 +1,16 @@
+region: aws-region
+vpc_id: aws-vpc-id
+security_group: aws-security-group
+keypair_name: aws-keypair
+
+iam_role:
+  name: ecs-instance-role
+  policy_arn: "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+
+ecs:
+  cluster_name: p-ecs-cluster-01
+  instance_name: p-ecs-instance-01
+  ami_id: ami-058a4964
+  instance_type: t2.micro
+  public_ip: yes
+  app_name: demo-application
