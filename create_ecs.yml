@@ -10,3 +10,4 @@
     - security_group
     - iam_role
     - ecs_cluster
+    - ecs_cluster_instance
