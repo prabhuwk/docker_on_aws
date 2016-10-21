@@ -1,0 +1,27 @@
+- name: '{{ stack_stat }} ecs instance "{{ ecs.instance_name }}"'
+  ec2:
+    region: "{{ region }}"
+    state: "{{ state }}"
+    image: "{{ ecs.ami_id }}"
+    instance_type: "{{ ecs.instance_type }}"
+    vpc_subnet_id: "{{ vpc_subnet_id.zone_a }}"
+    assign_public_ip: "{{ ecs.public_ip }}"
+    instance_profile_name: "{{ iam_role.name }}"
+    wait: true
+    user_data: |
+      #!/bin/bash
+      echo ECS_CLUSTER={{ ecs.cluster_name }} >> /etc/ecs/ecs.config
+    instance_tags:
+      Name: "{{ ecs.instance_name }}"
+    group: "{{ security_group }}"
+    key_name: "{{ keypair_name }}"
+    id: "{{ ecs.instance_name }}"
+  register: ec2_result
+
+- name: "Add {{ ecs.instance_name }} instance to host group"
+  add_host: hostname={{ item.public_ip }} groupname=launched
+  with_items: "{{ ec2_result.instances }}"
+
+- name: "Wait for {{ ecs.instance_name }} ssh to come up"
+  wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
+  with_items: "{{ ec2_result.instances }}"

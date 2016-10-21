@@ -1,0 +1,15 @@
+- name: Gather remote EC2 facts
+  ec2_remote_facts:
+    region: "{{ region }}"
+    filters:
+      instance-state-name: running
+      "tag:Name": "{{ ecs.instance_name }}"
+  register: ec2_remote_facts_output
+
+- name: '{{ stack_stat }} ecs instance "{{ ecs.instance_name }}"'
+  ec2:
+    region: "{{ region }}"
+    wait: True
+    state: "{{ state }}"
+    instance_ids: "{{ ec2_remote_facts_output.instances[0].id }}"
+  ignore_errors: yes

@@ -10,3 +10,4 @@
     - security_group
     - iam_role_terminate
     - ecs_cluster
+    - ecs_instance_terminate
