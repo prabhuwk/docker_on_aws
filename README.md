@@ -7,3 +7,4 @@
 5. Cloudwatch log group for container logs
 6. ECS Task Definition for httpd and mysql linked container
 7. ECS Service
+8. Deploy Web Content
