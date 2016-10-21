@@ -8,3 +8,4 @@
     - include_vars: "vars/terminate_stack.yml"
   roles:
     - security_group
+    - iam_role_terminate

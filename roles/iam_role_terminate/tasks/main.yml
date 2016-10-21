@@ -1,0 +1,11 @@
+- name: detach policy from role
+  command: /usr/local/bin/aws iam detach-role-policy --role-name {{ iam_role.name }} --policy-arn  {{ iam_role.policy_arn }}
+  register: policy_output
+
+- name: '{{ stack_stat }} IAM role "{{ iam_role.name }}" for ECS instance'
+  iam:
+    region: "{{ region }}"
+    state: "{{ state }}"
+    iam_type: role
+    name: "{{ iam_role.name }}"
+  when: policy_output.changed
