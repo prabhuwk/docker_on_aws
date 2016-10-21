@@ -13,3 +13,4 @@
     - ecs_cluster_instance
     - cloudwatch_awslogs_group
     - ecs_task_definition
+    - ecs_service
