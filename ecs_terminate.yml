@@ -7,7 +7,8 @@
     - include_vars: "vars/base.yml"
     - include_vars: "vars/terminate_stack.yml"
   roles:
-    - security_group
-    - iam_role_terminate
-    - ecs_cluster
     - ecs_instance_terminate
+    - ecs_cluster
+    - cloudwatch_awslogs_group
+    - iam_role_terminate
+    - security_group

@@ -11,3 +11,4 @@
     - iam_role
     - ecs_cluster
     - ecs_cluster_instance
+    - cloudwatch_awslogs_group

@@ -1,0 +1,4 @@
+- name: '{{ stack_stat }} cloudwatch log group'
+  command: "aws logs {{ stack_stat }}-log-group --log-group-name ecslogs-demo-app"
+  register: awslog_group_ouptut
+  ignore_errors: yes
