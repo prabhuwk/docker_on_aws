@@ -12,3 +12,4 @@
     - ecs_cluster
     - ecs_cluster_instance
     - cloudwatch_awslogs_group
+    - ecs_task_definition

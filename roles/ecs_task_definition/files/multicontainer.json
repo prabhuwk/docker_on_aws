@@ -1,0 +1,90 @@
+{
+    "containerDefinitions": [
+        {
+            "memory": 500,
+            "extraHosts": [
+                {
+                    "hostname": "webserver",
+                    "ipAddress": "172.17.0.3"
+                }
+            ],
+            "hostname": "dbserver",
+            "essential": true,
+            "mountPoints": [
+                {
+                    "containerPath": "/var/lib/mysql",
+                    "sourceVolume": "dbdir"
+                }
+            ],
+            "name": "mysql",
+            "environment": [
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "password"
+                }
+            ],
+            "image": "mysql:5.7",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "ecslogs-demo-app",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "database"
+                }
+            },
+            "cpu": 512
+        },
+        {
+            "memory": 250,
+            "extraHosts": [
+                {
+                    "hostname": "dbserver",
+                    "ipAddress": "172.17.0.2"
+                }
+            ],
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "hostname": "webserver",
+            "essential": true,
+            "mountPoints": [
+                {
+                    "containerPath": "/usr/local/apache2/htdocs",
+                    "sourceVolume": "webdocs"
+                }
+            ],
+            "name": "httpd",
+            "links": [
+                "mysql"
+            ],
+            "image": "httpd:2.4",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "ecslogs-demo-app",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "web"
+                }
+            },
+            "cpu": 256
+        }
+    ],
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "/mydockervol/webdocs"
+            },
+            "name": "webdocs"
+        },
+        {
+            "host": {
+                "sourcePath": "/mydockervol/dbdir"
+            },
+            "name": "dbdir"
+        }
+    ]
+}

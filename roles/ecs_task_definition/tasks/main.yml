@@ -1,0 +1,3 @@
+- name: '{{ stack_stat }} task definition for "{{ ecs.app_name }}"'
+  command: 'aws ecs register-task-definition --family "{{ ecs.app_name }}" --cli-input-json file://roles/ecs_task_definition/files/multicontainer.json'
+  ignore_errors: yes
