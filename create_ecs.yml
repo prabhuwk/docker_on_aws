@@ -9,3 +9,4 @@
   roles:
     - security_group
     - iam_role
+    - ecs_cluster

@@ -1,0 +1,6 @@
+- name: '{{ stack_stat }} ecs cluster "{{ ecs.cluster_name }}"'
+  ecs_cluster:
+    region: "{{ region }}"
+    name: "{{ ecs.cluster_name }}"
+    delay: 20
+    state: "{{ state }}"
