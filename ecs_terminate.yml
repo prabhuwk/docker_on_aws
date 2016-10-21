@@ -1,0 +1,10 @@
+#!/usr/local/bin/ansible-playbook
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  pre_tasks:
+    - include_vars: "vars/base.yml"
+    - include_vars: "vars/terminate_stack.yml"
+  roles:
+    - security_group
