@@ -1,0 +1,15 @@
+- name: '{{ stack_stat }} IAM role "{{ iam_role.name }}" for ECS instance'
+  iam:
+    region: "{{ region }}"
+    state: "{{ state }}"
+    iam_type: role
+    name: "{{ iam_role.name }}"
+  register: iam_role_result
+  ignore_errors: yes
+
+- name: Attach policy to created role
+  command: /usr/local/bin/aws iam attach-role-policy --role-name {{ iam_role.name }} --policy-arn  {{ iam_role.policy_arn }}
+  when: iam_role_result.changed
+
+- name: wait for 10 seconds
+  command: sleep 10
