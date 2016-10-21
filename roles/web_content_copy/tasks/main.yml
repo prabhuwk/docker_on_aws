@@ -1,0 +1,5 @@
+- name: wait for webdocs folder available
+  wait_for: path=/mydockervol/webdocs
+
+- name: copy index.html file
+  copy: src=index.html dest=/mydockervol/webdocs/index.html

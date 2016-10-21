@@ -14,3 +14,10 @@
     - cloudwatch_awslogs_group
     - ecs_task_definition
     - ecs_service
+
+- hosts: launched
+  gather_facts: no
+  user: ec2-user
+  become: yes
+  roles:
+    - web_content_copy
